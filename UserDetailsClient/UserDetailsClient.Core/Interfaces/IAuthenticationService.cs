@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using UserDetailsClient.Core.Models;
 
-namespace UserDetailsClient.Core.Features.LogOn
+namespace UserDetailsClient.Core.Interfaces
 {
     public interface IAuthenticationService
     {

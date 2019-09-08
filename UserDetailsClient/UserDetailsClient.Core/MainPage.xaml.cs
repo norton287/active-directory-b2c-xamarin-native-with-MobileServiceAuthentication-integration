@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using Microsoft.Identity.Client;
-using UserDetailsClient.Core.Features.LogOn;
+using UserDetailsClient.Core.Interfaces;
+using UserDetailsClient.Core.Models;
 using Xamarin.Forms;
 
 namespace UserDetailsClient.Core

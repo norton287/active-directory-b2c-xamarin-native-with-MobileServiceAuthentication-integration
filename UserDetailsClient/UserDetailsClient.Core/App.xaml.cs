@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using UserDetailsClient.Core.Services;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using UserDetailsClient.Core.Features.LogOn;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace UserDetailsClient.Core

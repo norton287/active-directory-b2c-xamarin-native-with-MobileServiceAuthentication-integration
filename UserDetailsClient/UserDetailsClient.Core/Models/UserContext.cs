@@ -1,4 +1,4 @@
-﻿namespace UserDetailsClient.Core.Features.LogOn
+﻿namespace UserDetailsClient.Core.Models
 {
     public class UserContext
     {

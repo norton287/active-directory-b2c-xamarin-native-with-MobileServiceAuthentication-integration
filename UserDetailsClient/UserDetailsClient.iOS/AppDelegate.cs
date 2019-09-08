@@ -4,7 +4,7 @@ using Microsoft.Identity.Client;
 
 using UserDetailsClient.Core;
 using Xamarin.Forms;
-using UserDetailsClient.Core.Features.LogOn;
+using UserDetailsClient.Core.Interfaces;
 
 namespace UserDetailsClient.iOS
 {

@@ -1,16 +1,24 @@
-﻿using Microsoft.Identity.Client;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Identity.Client;
+using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json.Linq;
+using UserDetailsClient.Core.Constants;
+using UserDetailsClient.Core.Helpers;
+using UserDetailsClient.Core.Interfaces;
+using UserDetailsClient.Core.Models;
 
-namespace UserDetailsClient.Core.Features.LogOn
+namespace UserDetailsClient.Core.Services
 {
     public class B2CAuthenticationService : IAuthenticationService
     {
         public IPublicClientApplication PCA = null;
+
+        //Create the mobile service user object for MobileServiceAuthentication
+        public static MobileServiceUser User { get; set; }
 
         public object ParentActivityOrWindow { get; set; }
 
@@ -48,6 +56,35 @@ namespace UserDetailsClient.Core.Features.LogOn
                .ExecuteAsync();
 
             var newContext = UpdateUserInfo(authResult);
+
+            //Authenticate to our mobile app service
+            if (User == null)
+            {
+                var ar = authResult;
+                var payload = new JObject();
+
+                if (ar != null && !string.IsNullOrWhiteSpace(ar.IdToken))
+                {
+                    payload["access_token"] = ar.IdToken;
+                }
+
+                if (AzureMobileServiceClientHelper.DefaultClientHelper == null) return newContext;
+                if (AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient == null) return newContext;
+
+                User = await AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.LoginAsync(
+                    MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory,
+                    payload).ConfigureAwait(true);
+
+                if (User != null)
+                {
+                    AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.CurrentUser =
+                        new MobileServiceUser(User.UserId)
+                        {
+                            MobileServiceAuthenticationToken = User.MobileServiceAuthenticationToken
+                        };
+                }
+            }
+
             return newContext;
         }
 
@@ -60,6 +97,34 @@ namespace UserDetailsClient.Core.Features.LogOn
                 .ExecuteAsync();
 
             var userContext = UpdateUserInfo(authResult);
+
+            //Authenticate to our mobile app service
+            if (User == null)
+            {
+                var ar = authResult;
+                var payload = new JObject();
+
+                if (ar != null && !string.IsNullOrWhiteSpace(ar.IdToken))
+                {
+                    payload["access_token"] = ar.IdToken;
+                }
+
+                if (AzureMobileServiceClientHelper.DefaultClientHelper == null) return userContext;
+                if (AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient == null) return userContext;
+
+                User = await AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.LoginAsync(
+                    MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory,
+                    payload).ConfigureAwait(true);
+
+                if (User != null)
+                {
+                    AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.CurrentUser =
+                        new MobileServiceUser(User.UserId)
+                        {
+                            MobileServiceAuthenticationToken = User.MobileServiceAuthenticationToken
+                        };
+                }
+            }
 
             return userContext;
         }
@@ -77,6 +142,34 @@ namespace UserDetailsClient.Core.Features.LogOn
 
             var userContext = UpdateUserInfo(authResult);
 
+            //Authenticate to our mobile app service
+            if (User == null)
+            {
+                var ar = authResult;
+                var payload = new JObject();
+
+                if (ar != null && !string.IsNullOrWhiteSpace(ar.IdToken))
+                {
+                    payload["access_token"] = ar.IdToken;
+                }
+
+                if (AzureMobileServiceClientHelper.DefaultClientHelper == null) return userContext;
+                if (AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient == null) return userContext;
+
+                User = await AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.LoginAsync(
+                    MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory,
+                    payload).ConfigureAwait(true);
+
+                if (User != null)
+                {
+                    AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.CurrentUser =
+                        new MobileServiceUser(User.UserId)
+                        {
+                            MobileServiceAuthenticationToken = User.MobileServiceAuthenticationToken
+                        };
+                }
+            }
+
             return userContext;
         }
 
@@ -90,6 +183,35 @@ namespace UserDetailsClient.Core.Features.LogOn
                 .ExecuteAsync();
 
             var newContext = UpdateUserInfo(authResult);
+
+            //Authenticate to our mobile app service
+            if (User == null)
+            {
+                var ar = authResult;
+                var payload = new JObject();
+
+                if (ar != null && !string.IsNullOrWhiteSpace(ar.IdToken))
+                {
+                    payload["access_token"] = ar.IdToken;
+                }
+
+                if (AzureMobileServiceClientHelper.DefaultClientHelper == null) return newContext;
+                if (AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient == null) return newContext;
+
+                User = await AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.LoginAsync(
+                    MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory,
+                    payload).ConfigureAwait(true);
+
+                if (User != null)
+                {
+                    AzureMobileServiceClientHelper.DefaultClientHelper.CurrentClient.CurrentUser =
+                        new MobileServiceUser(User.UserId)
+                        {
+                            MobileServiceAuthenticationToken = User.MobileServiceAuthenticationToken
+                        };
+                }
+            }
+
             return newContext;
         }
 
@@ -104,6 +226,10 @@ namespace UserDetailsClient.Core.Features.LogOn
             }
             var signedOutContext = new UserContext();
             signedOutContext.IsLoggedOn = false;
+
+            //Clear the MobileServiceUser object
+            User = null;
+
             return signedOutContext;
         }
 

@@ -1,12 +1,14 @@
 ﻿using Android.App;
-using Android.Content.PM;
-using Microsoft.Identity.Client;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 
+using Microsoft.Identity.Client;
+
 using UserDetailsClient.Core;
+using UserDetailsClient.Core.Interfaces;
+
 using Xamarin.Forms;
-using UserDetailsClient.Core.Features.LogOn;
 
 namespace UserDetailsClient.Droid
 {

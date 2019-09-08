@@ -1,4 +1,4 @@
-﻿namespace UserDetailsClient.Core.Features.LogOn
+﻿namespace UserDetailsClient.Core.Constants
 {
     public static class B2CConstants
     {
