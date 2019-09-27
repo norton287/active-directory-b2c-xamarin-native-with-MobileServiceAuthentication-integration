@@ -67,14 +67,7 @@ namespace UserDetailsClient.Core
                 message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage response = await client.SendAsync(message);
                 string responseString = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
-                {
-                    lblApi.Text = $"Response from API {App.ApiEndpoint} | {responseString}";
-                }
-                else
-                {
-                    lblApi.Text = $"Error calling API {App.ApiEndpoint} | {responseString}";
-                }
+                lblApi.Text = response.IsSuccessStatusCode ? $"Response from API {App.ApiEndpoint} | {responseString}" : $"Error calling API {App.ApiEndpoint} | {responseString}";
             }
             catch (MsalUiRequiredException ex)
             {
