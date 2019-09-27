@@ -1,18 +1,18 @@
 ---
 page_type: sample
-description: "This is a simple Xamarin Forms app showcasing how to use MSAL to authenticate users via Azure Active Directory B2C."
+description: "This is a simple Xamarin Forms app showcasing how to use MSAL to authenticate users via Azure Active Directory B2C and pass the token to MobileServiceClient."
 languages:
 - csharp
 products:
 - azure
 - azure-active-directory
-- xamarin
+- Xamarin
 - dotnet
 urlFragment: integrate-azure-ad-b2c-xamarin-forms
 ---
 
 
-# Integrate Azure AD B2C into a Xamarin forms app using MSAL
+# Integrate Azure AD B2C into a Xamarin forms app using MSAL and MobileServiceClient
 
 This is a simple Xamarin Forms app showcasing how to use MSAL to authenticate users via Azure Active Directory B2C, and access an ASP.NET Web API with the resulting token. For more information on Azure B2C, see the [Azure AD B2C documentation](https://docs.microsoft.com/azure/active-directory-b2c/active-directory-b2c-overview).
 
@@ -99,9 +99,9 @@ Your native application registration should include the following information:
 </array>
  ```
  where `[APPLICATIONID]` is the identifier you copied in step 2. Save the file.
- 
+
 #### [OPTIONAL] Step 6b: Configure the Android project with your app's return URI
- 
+
  1. Open the `UserDetailsClient.Droid\Properties\AndroidManifest.xml`
  1. Add or modify the `<application>` element as in the following
  ```xml
@@ -129,7 +129,7 @@ Your native application registration should include the following information:
 #### Running in an Android Emulator
 
 If you have issues with the Android emulator, please refer to [this document](https://github.com/Azure-Samples/active-directory-general-docs/blob/master/AndroidEmulator.md) for instructions on how to ensure that your emulator supports the features required by MSAL. 
- 
+
 ## About the code
 
 The structure of the solution is straightforward. All the application logic and UX reside in UserDetailsClient (portable).
