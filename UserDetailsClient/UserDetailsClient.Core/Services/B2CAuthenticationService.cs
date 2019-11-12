@@ -224,8 +224,8 @@ namespace UserDetailsClient.Core.Services
                 await PCA.RemoveAsync(accounts.FirstOrDefault());
                 accounts = await PCA.GetAccountsAsync();
             }
-            var signedOutContext = new UserContext();
-            signedOutContext.IsLoggedOn = false;
+
+            var signedOutContext = new UserContext {IsLoggedOn = false};
 
             //Clear the MobileServiceUser object
             User = null;
