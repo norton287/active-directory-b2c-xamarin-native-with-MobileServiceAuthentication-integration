@@ -22,6 +22,7 @@ To run this sample you will need:
 - Visual Studio 2017
 - An Internet connection
 - An Azure AD B2C tenant
+- An Azure Mobile Service App
 
 If you don't have an Azure AD B2C tenant, you can follow [those instructions](https://azure.microsoft.com/documentation/articles/active-directory-b2c-get-started/) to create one. 
 If you just want to see the sample in action, you don't need to create your own tenant as the project comes with some settings associated to a test tenant and application; however it is highly recommend that you register your own app and experience going through the configuration steps below.   
@@ -33,6 +34,10 @@ From your shell or command line:
 ```powershell
 git clone https://github.com/Azure-Samples/active-directory-b2c-xamarin-native.git
 ```
+
+### [REQUIRED] Step 1a: Configure AzureMobileServiceClientHelper  Coordinates
+
+Edit the Helpers/AzureMobileServiceClientHelper.cs class file and enter the coordinates to your Azure Mobile Service App.
 
 ### [OPTIONAL] Step 2: Get your own Azure AD B2C tenant
 
