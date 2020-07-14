@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using Microsoft.Identity.Client;
-using UserDetailsClient.Core.Features.LogOn;
 using Xamarin.Forms;
+using UserDetailsClient.Core.Models;
+using UserDetailsClient.Core.Services;
 
 namespace UserDetailsClient.Core
 {
@@ -19,15 +20,16 @@ namespace UserDetailsClient.Core
             {
                 if (btnSignInSignOut.Text == "Sign in")
                 {
-                    var userContext = await B2CAuthenticationService.Instance.SignInAsync();
+                    var userContext = await  AuthenticationService.Instance.SignInAsync();
                     UpdateSignInState(userContext);
                     UpdateUserInfo(userContext);
                 }
                 else
                 {
-                    var userContext = await B2CAuthenticationService.Instance.SignOutAsync();
+                    var userContext = await  AuthenticationService.Instance.SignOutAsync();
                     UpdateSignInState(userContext);
                     UpdateUserInfo(userContext);
+                     AuthenticationService.User = null;
                 }
             }
             catch (Exception ex)
@@ -47,7 +49,7 @@ namespace UserDetailsClient.Core
             try
             {
                 lblApi.Text = $"Calling API {App.ApiEndpoint}";
-                var userContext = await B2CAuthenticationService.Instance.SignInAsync();
+                var userContext = await  AuthenticationService.Instance.SignInAsync();
                 var token = userContext.AccessToken;
 
                 // Get data from API
@@ -79,7 +81,7 @@ namespace UserDetailsClient.Core
         {
             try
             {
-                var userContext = await B2CAuthenticationService.Instance.EditProfileAsync();
+                var userContext = await  AuthenticationService.Instance.EditProfileAsync();
                 UpdateSignInState(userContext);
                 UpdateUserInfo(userContext);
             }
@@ -94,7 +96,7 @@ namespace UserDetailsClient.Core
         {
             try
             {
-                var userContext = await B2CAuthenticationService.Instance.ResetPasswordAsync();
+                var userContext = await  AuthenticationService.Instance.ResetPasswordAsync();
                 UpdateSignInState(userContext);
                 UpdateUserInfo(userContext);
             }
@@ -109,7 +111,7 @@ namespace UserDetailsClient.Core
         {
             try
             {
-                var userContext = await B2CAuthenticationService.Instance.ResetPasswordAsync();
+                var userContext = await  AuthenticationService.Instance.ResetPasswordAsync();
                 UpdateSignInState(userContext);
                 UpdateUserInfo(userContext);
             }

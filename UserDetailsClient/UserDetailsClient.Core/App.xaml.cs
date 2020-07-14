@@ -25,7 +25,7 @@ namespace UserDetailsClient.Core
              * it allows us to grab the instance of the B2CAuthenticationService that we register in the line below:
              * 
              * */
-            DependencyService.Register<B2CAuthenticationService>();
+            DependencyService.Register << AuthenticationService > ();
 
             MainPage = new NavigationPage(new MainPage());
         }

@@ -7,7 +7,7 @@ using Microsoft.Identity.Client;
 
 using UserDetailsClient.Core;
 using UserDetailsClient.Core.Interfaces;
-
+using Plugin.CurrentActivity;
 using Xamarin.Forms;
 
 namespace UserDetailsClient.Droid
@@ -26,9 +26,8 @@ namespace UserDetailsClient.Droid
 
             LoadApplication(new App());
 
-            var authenticationService = DependencyService.Get<IAuthenticationService>();
-            // Default system browser
-            authenticationService.SetParent(this);
+            CrossCurrentActivity.Current.Init(this, bundle);
+            DependencyService.Register<IParentWindowLocatorService, AndroidParentWindowLocatorService>();
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
