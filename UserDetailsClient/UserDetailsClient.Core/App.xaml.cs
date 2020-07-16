@@ -1,5 +1,4 @@
-﻿using UserDetailsClient.Core.Services;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -25,7 +24,6 @@ namespace UserDetailsClient.Core
              * it allows us to grab the instance of the B2CAuthenticationService that we register in the line below:
              * 
              * */
-            DependencyService.Register << AuthenticationService > ();
 
             MainPage = new NavigationPage(new MainPage());
         }

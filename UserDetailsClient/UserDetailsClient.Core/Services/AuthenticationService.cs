@@ -170,9 +170,6 @@ namespace UserDetailsClient.Core.Services
                         {
                             MobileServiceAuthenticationToken = User.MobileServiceAuthenticationToken
                         };
-
-                    App.User.id = User.UserId;
-                    App.token = User.MobileServiceAuthenticationToken;
                 }
             }
 
