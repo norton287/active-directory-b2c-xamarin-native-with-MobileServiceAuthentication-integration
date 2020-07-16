@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using UserDetailsClient.Core.Interfaces;
 using UserDetailsClient.Core.Helpers;
 using Microsoft.WindowsAzure.MobileServices;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace UserDetailsClient.Core.Services
 {
@@ -29,7 +30,7 @@ namespace UserDetailsClient.Core.Services
         private static readonly Lazy<AuthenticationService> lazy = new Lazy<AuthenticationService>
            (() => new AuthenticationService());
 
-        public static AuthenticationService Instance { get { return lazy.Value; } }
+        public static AuthenticationService Instance => lazy.Value;
 
 
         private AuthenticationService()
@@ -42,13 +43,13 @@ namespace UserDetailsClient.Core.Services
                 .WithRedirectUri($"msal{B2CConstants.ClientID}://auth");
 
             // Android implementation is based on https://github.com/jamesmontemagno/CurrentActivityPlugin
-            // iOS implementation would require to expose the current ViewControler - not currently implemented as it is not required
+            // iOS implementation would require to expose the current ViewController - not currently implemented as it is not required
             // UWP does not require this
             var windowLocatorService = DependencyService.Get<IParentWindowLocatorService>();
 
             if (windowLocatorService != null)
             {
-                builder = builder.WithParentActivityOrWindow(() => windowLocatorService?.GetCurrentParentWindow());
+                builder = builder.WithParentActivityOrWindow(() => windowLocatorService.GetCurrentParentWindow());
             }
 
             _pca = builder.Build();
@@ -185,8 +186,8 @@ namespace UserDetailsClient.Core.Services
                 await _pca.RemoveAsync(accounts.FirstOrDefault());
                 accounts = await _pca.GetAccountsAsync();
             }
-            var signedOutContext = new UserContext();
-            signedOutContext.IsLoggedOn = false;
+
+            var signedOutContext = new UserContext {IsLoggedOn = false};
             return signedOutContext;
         }
 
@@ -201,7 +202,7 @@ namespace UserDetailsClient.Core.Services
             return null;
         }
 
-        private string Base64UrlDecode(string s)
+        private string _base64UrlDecode(string s)
         {
             s = s.Replace('-', '+').Replace('_', '/');
             s = s.PadRight(s.Length + (4 - s.Length % 4) % 4, '=');
@@ -212,9 +213,8 @@ namespace UserDetailsClient.Core.Services
 
         public UserContext UpdateUserInfo(AuthenticationResult ar)
         {
-            var newContext = new UserContext();
-            newContext.IsLoggedOn = false;
-            JObject user = ParseIdToken(ar.IdToken);
+	        var newContext = new UserContext {IsLoggedOn = false};
+	        var user = _parseIdToken(ar.IdToken);
 
             newContext.AccessToken = ar.AccessToken;
             newContext.Name = user["name"]?.ToString();
@@ -231,8 +231,7 @@ namespace UserDetailsClient.Core.Services
 
             newContext.JobTitle = user["jobTitle"]?.ToString();
 
-            var emails = user["emails"] as JArray;
-            if (emails != null)
+            if (user["emails"] is JArray emails)
             {
                 newContext.EmailAddress = emails[0].ToString();
             }
@@ -241,11 +240,11 @@ namespace UserDetailsClient.Core.Services
             return newContext;
         }
 
-        JObject ParseIdToken(string idToken)
+        private JObject _parseIdToken(string idToken)
         {
             // Get the piece with actual user info
             idToken = idToken.Split('.')[1];
-            idToken = Base64UrlDecode(idToken);
+            idToken = _base64UrlDecode(idToken);
             return JObject.Parse(idToken);
         }
     }
