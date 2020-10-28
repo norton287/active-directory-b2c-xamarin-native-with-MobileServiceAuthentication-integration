@@ -11,9 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.530893" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.22.0" />
+    <PackageReference Include="Microsoft.Azure.Mobile.Client" Version="4.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1534" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>

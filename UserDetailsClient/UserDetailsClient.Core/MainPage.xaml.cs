@@ -14,7 +14,7 @@ namespace UserDetailsClient.Core
             InitializeComponent();
         }
 
-        async void OnSignInSignOut(object sender, EventArgs e)
+        private async void OnSignInSignOut(object sender, EventArgs e)
         {
             try
             {
@@ -44,7 +44,8 @@ namespace UserDetailsClient.Core
                     await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
-        async void OnCallApi(object sender, EventArgs e)
+
+        private async void OnCallApi(object sender, EventArgs e)
         {
             try
             {
@@ -63,8 +64,8 @@ namespace UserDetailsClient.Core
                     lblApi.Text = $"Response from API {App.ApiEndpoint} | {responseString}";
                 }
                 else
-                 {
-                    lblApi.Text = $"Error calling API {App.ApiEndpoint} | {responseString}";
+                {
+	                lblApi.Text = $"Error calling API {App.ApiEndpoint} | {responseString}";
                 }
             }
             catch (MsalUiRequiredException ex)
@@ -77,7 +78,7 @@ namespace UserDetailsClient.Core
             }
         }
 
-        async void OnEditProfile(object sender, EventArgs e)
+        private async void OnEditProfile(object sender, EventArgs e)
         {
             try
             {
@@ -92,22 +93,8 @@ namespace UserDetailsClient.Core
                     await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
-        async void OnResetPassword(object sender, EventArgs e)
-        {
-            try
-            {
-                var userContext = await  AuthenticationService.Instance.ResetPasswordAsync();
-                UpdateSignInState(userContext);
-                UpdateUserInfo(userContext);
-            }
-            catch (Exception ex)
-            {
-                // Alert if any exception excluding user canceling sign-in dialog
-                if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
-                    await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
-            }
-        }
-        async void OnPasswordReset()
+
+        private async void OnResetPassword(object sender, EventArgs e)
         {
             try
             {
@@ -123,7 +110,23 @@ namespace UserDetailsClient.Core
             }
         }
 
-        void UpdateSignInState(UserContext userContext)
+        private async void OnPasswordReset()
+        {
+            try
+            {
+                var userContext = await  AuthenticationService.Instance.ResetPasswordAsync();
+                UpdateSignInState(userContext);
+                UpdateUserInfo(userContext);
+            }
+            catch (Exception ex)
+            {
+                // Alert if any exception excluding user canceling sign-in dialog
+                if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
+                    await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
+            }
+        }
+
+        private void UpdateSignInState(UserContext userContext)
         {
             var isSignedIn = userContext.IsLoggedOn;
             btnSignInSignOut.Text = isSignedIn ? "Sign out" : "Sign in";
@@ -132,7 +135,8 @@ namespace UserDetailsClient.Core
             slUser.IsVisible = isSignedIn;
             lblApi.Text = "";
         }
-        public void UpdateUserInfo(UserContext userContext)
+
+        private void UpdateUserInfo(UserContext userContext)
         {
             lblName.Text = userContext.Name;
             lblJob.Text = userContext.JobTitle;
