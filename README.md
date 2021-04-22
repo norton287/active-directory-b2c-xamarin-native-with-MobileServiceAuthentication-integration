@@ -31,7 +31,7 @@ If you just want to see the sample in action, you don't need to create your own 
 From your shell or command line:
 
 ```powershell
-git clone https://github.com/Azure-Samples/active-directory-b2c-xamarin-native.git
+git clone https://github.com/norton287/active-directory-b2c-xamarin-native-with-MobileServiceAuthentication-integration.git
 ```
 
 ### [OPTIONAL] Step 2: Get your own Azure AD B2C tenant
